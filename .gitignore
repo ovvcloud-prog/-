@@ -1,0 +1,8 @@
+# Deny by default — this repo is the Windows user profile directory,
+# which contains OS state, caches, and secrets that must never be committed.
+# Only explicitly allow-listed paths below are tracked.
+*
+
+!.gitignore
+!README.md
+!CLAUDE.md
