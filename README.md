@@ -1,7 +1,60 @@
-# -
+# Профиль Windows — личные файлы
 
-This repository tracks a small set of personal configuration files from this
-Windows user profile (currently `CLAUDE.md`, used as instructions for Claude
-Code). Everything else in this directory is intentionally excluded via
-`.gitignore` — this profile folder also holds OS state, caches, and secrets
-(SSH keys, credential stores, browser data) that must never be committed.
+Этот репозиторий лежит прямо в папке профиля Windows (`C:\Users\Vital`) и
+хранит только небольшой набор явно выбранных файлов. Всё остальное в папке —
+состояние ОС, кэши и секреты (SSH-ключи, хранилища паролей, данные браузеров)
+— исключено через `.gitignore` и **никогда не должно попадать в коммиты**.
+
+## Что здесь есть
+
+| Файл | Назначение |
+|---|---|
+| `CLAUDE.md` | Инструкции для Claude Code: общие правила поведения при работе с кодом |
+| `README.md` | Этот файл |
+| `.gitignore` | Запрещает всё по умолчанию и разрешает только перечисленные файлы |
+| `zavidovoandroid.zip` | Архив Android-приложения курорта «Завидово» (см. ниже) |
+
+## Как устроен `.gitignore`
+
+Принцип «запрещено всё, кроме разрешённого»:
+
+```gitignore
+*
+!.gitignore
+!README.md
+!CLAUDE.md
+!zavidovoandroid.zip
+```
+
+Чтобы начать отслеживать новый файл, добавьте для него строку `!имя_файла`
+в `.gitignore`, затем выполните `git add`. Перед коммитом проверяйте
+`git status` — в списке не должно быть ничего лишнего из профиля.
+
+## Приложение «Завидово» (`zavidovoandroid.zip`)
+
+Нативный Android-порт прототипа приложения курорта «Завидово» на Kotlin +
+Jetpack Compose (Material 3), стиль — чёрный и золотой. Семь экранов:
+Главная, Услуги, Бронирование, События, Консьерж, Карта, Профиль.
+
+- Kotlin 2.0.21, Compose BOM 2024.10.01, `minSdk 26`, `targetSdk 35`
+- Шрифты Cormorant Garamond и Manrope встроены в проект (с кириллицей),
+  интернет для отображения интерфейса не нужен
+
+### Сборка
+
+Нужны Android SDK (platform 35) и JDK 17+.
+
+```bash
+unzip zavidovoandroid.zip
+cd android
+echo "sdk.dir=/путь/к/Android/sdk" > local.properties   # или задайте ANDROID_HOME
+
+./gradlew assembleDebug    # → app/build/outputs/apk/debug/app-debug.apk
+./gradlew installDebug     # установка на подключённое устройство/эмулятор
+```
+
+Либо просто откройте папку `android/` в Android Studio и нажмите Run.
+Подробности — в `android/README.md` внутри архива.
+
+> Проект создавался без доступа к сети и ни разу не собирался — при первой
+> сборке возможны мелкие ошибки.
